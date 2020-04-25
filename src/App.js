@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
 import firebase, { auth, provider } from "./firebase.js";
-import Items from "./components/Items";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import NotAuth from "./components/NotAuth";
@@ -46,7 +45,7 @@ class App extends Component {
     const item = {
       title: this.state.currentItem,
       user: this.state.user.email,
-      amount: this.state.amount,
+      amount: parseFloat(this.state.amount).toFixed(2),
       category: this.state.category,
     };
 
@@ -112,7 +111,7 @@ class App extends Component {
       <div className="app">
         <Container maxWidth="md">
           <Paper
-            style={{ height: "96vh", marginTop: "2vh", minWidth: "400px" }}
+            style={{ height: "100%", marginTop: "2vh", minWidth: "200px" }}
           >
             <Box>
               <Header
@@ -123,17 +122,15 @@ class App extends Component {
             </Box>
             <Box>
               {this.state.user ? (
-                <Box>
-                  <Form
-                    handleChange={this.handleChange}
-                    handleSubmit={this.handleSubmit}
-                    user={this.state.user}
-                    currentItem={this.state.currentItem}
-                    amount={this.state.amount}
-                    category={this.state.category}
-                  />
-                  <Items items={this.state.items} user={this.state.user} />
-                </Box>
+                <Form
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
+                  user={this.state.user}
+                  currentItem={this.state.currentItem}
+                  amount={this.state.amount}
+                  category={this.state.category}
+                  items={this.state.items}
+                />
               ) : (
                 <NotAuth />
               )}

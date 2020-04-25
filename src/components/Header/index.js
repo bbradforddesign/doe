@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     marginBottom: "3vh",
-    backgroundColor: "#B3FFE6",
+    backgroundColor: "#A3FFE6",
   },
   logButton: {
     display: "flex",

@@ -6,9 +6,10 @@ import Graph from "../Graph";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import { Typography } from "@material-ui/core";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,14 +19,12 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     margin: "1vh auto",
-    width: "80%",
-  },
-  amount: {
+    width: "90%",
+    maxWidth: "600px",
     padding: "2%",
     display: "flex",
-    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
   },
 }));
 
@@ -38,77 +37,83 @@ const Items = (props) => {
   const classes = useStyles();
 
   const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpense, setTotalExpense] = useState(0);
+  const [totalHousing, setTotalHousing] = useState(0);
+  const [totalUtilities, setTotalUtilities] = useState(0);
+  const [totalFood, setTotalFood] = useState(0);
+  const [totalAuto, setTotalAuto] = useState(0);
+  const [totalDebt, setTotalDebt] = useState(0);
+  const [totalEtc, setTotalEtc] = useState(0);
 
-  useEffect(() => {
-    // reset placeholder value to recalculate when items change
-    let total = 0;
-    // for each item, if category equals income, increase placeholder by amount
-    props.items.map((item) => {
-      if (item.user === props.user.email && item.category === "income") {
-        total += parseFloat(item.amount);
-      }
-      // set state to equal placeholder
-      setTotalIncome(total);
-      return null;
-    });
-  }, [props]);
-
-  useEffect(() => {
+  // calculate total in a given category
+  const calcTotal = (props, category, setTotal) => {
     let total = 0;
     props.items.map((item) => {
-      if (item.user === props.user.email && item.category === "expense") {
+      if (item.user === props.user.email && item.category === category) {
         total += parseFloat(item.amount);
       }
-      setTotalExpense(total);
+      setTotal(total);
       return null;
     });
+  };
+
+  useEffect(() => {
+    calcTotal(props, "income", setTotalIncome);
+    calcTotal(props, "housing", setTotalHousing);
+    calcTotal(props, "utilities", setTotalUtilities);
+    calcTotal(props, "food", setTotalFood);
+    calcTotal(props, "auto", setTotalAuto);
+    calcTotal(props, "debt", setTotalDebt);
+    calcTotal(props, "etc", setTotalEtc);
   }, [props]);
 
   return (
-    <Box>
-      <ul className={classes.container}>
-        {props.items.map((item) => {
-          return (
-            <Box key={item.id} component="li">
-              {item.user === props.user.email ? (
-                <div>
-                  <Card
-                    style={{
-                      backgroundColor:
-                        item.category === "income" ? "#B3FFE6" : "#FF988F",
-                    }}
-                    className={classes.card}
-                  >
-                    <Grid container spacing={2} className={classes.amount}>
-                      <Grid item xs={4}>
-                        <Typography variant="h5">${item.amount}</Typography>
-                        <Typography variant="subtitle1">
-                          {item.category}
+    <Box style={{ width: "100%" }}>
+      <List style={{ maxHeight: 300, overflow: "auto" }}>
+        <ul className={classes.container}>
+          {props.items.map((item) => {
+            return (
+              <Box key={item.id} component="li">
+                {item.user === props.user.email ? (
+                  <ListItem>
+                    <Card className={classes.card}>
+                      <Box
+                        style={{
+                          width: "70%",
+                          wordWrap: "break-word",
+                        }}
+                      >
+                        <Typography variant="body1" style={{ noWrap: "true" }}>
+                          {item.category === "income" ? "+ " : "- "}$
+                          {item.amount}
                         </Typography>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <Typography variant="h6">{item.title}</Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          display="flex"
-                          onClick={() => removeItem(item.id)}
-                        >
-                          Delete
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Card>
-                </div>
-              ) : null}
-            </Box>
-          );
-        })}
-      </ul>
-      <Graph totalIncome={totalIncome} totalExpense={totalExpense} />
+                        <Typography variant="body2">{item.title}</Typography>
+                      </Box>
+
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => removeItem(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Card>
+                  </ListItem>
+                ) : null}
+              </Box>
+            );
+          })}
+        </ul>
+      </List>
+      <Graph
+        totalIncome={totalIncome}
+        totalHousing={totalHousing}
+        totalUtilities={totalUtilities}
+        totalFood={totalFood}
+        totalAuto={totalAuto}
+        totalDebt={totalDebt}
+        totalEtc={totalEtc}
+        title={"Expense Analysis"}
+      />
     </Box>
   );
 };

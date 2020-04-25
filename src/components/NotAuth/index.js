@@ -1,12 +1,15 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
 const NotAuth = () => {
   return (
-    <Box className="wrapper">
-      <Typography variant="h2">Please sign in</Typography>
-    </Box>
+    <Typography
+      variant="h4"
+      align="center"
+      style={{ marginTop: "40%", paddingBottom: "40%" }}
+    >
+      Please sign in
+    </Typography>
   );
 };
 
