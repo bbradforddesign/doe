@@ -14,9 +14,10 @@ import Items from "../Items";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "40%",
-    margin: "0 auto",
-    paddingLeft: "10%",
+    width: "40vw",
+    margin: "6% auto",
+    paddingLeft: "5%",
+    minWidth: "200px",
   },
   formControl: {
     margin: theme.spacing(2),
@@ -32,7 +33,9 @@ const Form = (props) => {
     <Box style={isMobile ? null : { display: "flex" }}>
       <Box
         className={classes.container}
-        style={isMobile ? { width: "80%" } : { marginLeft: "0" }}
+        style={
+          isMobile ? { width: "80%" } : { marginLeft: "0", height: "100%" }
+        }
       >
         <form onSubmit={props.handleSubmit}>
           <InputLabel>Description</InputLabel>
@@ -72,7 +75,7 @@ const Form = (props) => {
           </FormControl>
           <FormControl className={classes.formControl}>
             <Button variant="contained" color="primary" type="submit">
-              Add Amount
+              Record
             </Button>
           </FormControl>
         </form>

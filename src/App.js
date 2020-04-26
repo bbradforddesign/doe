@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import "./App.css";
+import { HashRouter, Route } from "react-router-dom";
 import firebase, { auth, provider } from "./firebase.js";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import NotAuth from "./components/NotAuth";
-
+import Graph from "./components/Graph";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import Paper from "@material-ui/core/Paper";
+import NavMenu from "./components/NavMenu";
+import About from "./components/About";
 
 class App extends Component {
   constructor() {
@@ -110,32 +111,51 @@ class App extends Component {
     return (
       <div className="app">
         <Container maxWidth="md">
-          <Paper
-            style={{ height: "100%", marginTop: "2vh", minWidth: "200px" }}
-          >
-            <Box>
-              <Header
-                user={this.state.user}
-                login={this.login}
-                logout={this.logout}
-              />
-            </Box>
-            <Box>
-              {this.state.user ? (
-                <Form
-                  handleChange={this.handleChange}
-                  handleSubmit={this.handleSubmit}
-                  user={this.state.user}
-                  currentItem={this.state.currentItem}
-                  amount={this.state.amount}
-                  category={this.state.category}
-                  items={this.state.items}
+          <Box>
+            <Header
+              user={this.state.user}
+              login={this.login}
+              logout={this.logout}
+            />
+          </Box>
+          <Box>
+            {this.state.user ? (
+              <HashRouter>
+                <NavMenu />
+                <Route
+                  exact
+                  path="/graph"
+                  render={(props) => (
+                    <Graph
+                      {...props}
+                      items={this.state.items}
+                      user={this.state.user}
+                      title={"Expense Analysis"}
+                    />
+                  )}
                 />
-              ) : (
-                <NotAuth />
-              )}
-            </Box>
-          </Paper>
+                <Route
+                  exact
+                  path="/form"
+                  render={(props) => (
+                    <Form
+                      {...props}
+                      handleChange={this.handleChange}
+                      handleSubmit={this.handleSubmit}
+                      user={this.state.user}
+                      currentItem={this.state.currentItem}
+                      amount={this.state.amount}
+                      category={this.state.category}
+                      items={this.state.items}
+                    />
+                  )}
+                />
+                <Route exact path="/about" component={About} />
+              </HashRouter>
+            ) : (
+              <NotAuth />
+            )}
+          </Box>
         </Container>
       </div>
     );
