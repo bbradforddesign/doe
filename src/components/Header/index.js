@@ -3,7 +3,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-
+import logo from "../../logo.png";
 const useStyles = makeStyles((theme) => ({
   header: {
     padding: "1% 2% 1% 2%",
@@ -28,7 +28,7 @@ const Header = (props) => {
           }}
         >
           <img
-            src={process.env.PUBLIC_URL + "/Logo-white.png"}
+            src={logo}
             style={{ height: "70px", width: "70px" }}
             alt="Doe logo"
           />
