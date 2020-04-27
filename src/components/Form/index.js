@@ -69,7 +69,8 @@ const Form = (props) => {
               <MenuItem value={"utilities"}>Utilities</MenuItem>
               <MenuItem value={"food"}>Food</MenuItem>
               <MenuItem value={"auto"}>Auto</MenuItem>
-              <MenuItem value={"debt"}>Debt Payment</MenuItem>
+              <MenuItem value={"debt"}>Debt Repayment</MenuItem>
+              <MenuItem value={"savings"}>Savings</MenuItem>
               <MenuItem value={"etc"}>Miscellaneous</MenuItem>
             </Select>
           </FormControl>

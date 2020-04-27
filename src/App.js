@@ -4,7 +4,7 @@ import firebase, { auth, provider } from "./firebase.js";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import NotAuth from "./components/NotAuth";
-import Graph from "./components/Graph";
+import Monthly from "./components/Monthly";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import NavMenu from "./components/NavMenu";
@@ -38,6 +38,9 @@ class App extends Component {
 
   // callback to set state in parent
   handleSubmit(e) {
+    // to fetch month/year
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
     // don't refresh page on submit
     e.preventDefault();
     // 'pointer' to items in Firebase
@@ -48,8 +51,8 @@ class App extends Component {
       user: this.state.user.email,
       amount: parseFloat(this.state.amount).toFixed(2),
       category: this.state.category,
+      created: month + "/" + year,
     };
-
     // sends copy of item to Firebase
     itemsRef.push(item);
     // clears inputs for next submit
@@ -59,8 +62,6 @@ class App extends Component {
       amount: 0,
       category: "",
     });
-
-    console.log(this.state.income);
   }
   // sign out in Firebase, then sign out in React
   logout() {
@@ -99,6 +100,7 @@ class App extends Component {
           user: items[item].user,
           amount: items[item].amount,
           category: items[item].category,
+          created: items[item].created,
         });
       }
       this.setState({
@@ -110,14 +112,12 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Container maxWidth="md">
-          <Box>
-            <Header
-              user={this.state.user}
-              login={this.login}
-              logout={this.logout}
-            />
-          </Box>
+        <Container maxWidth="lg">
+          <Header
+            user={this.state.user}
+            login={this.login}
+            logout={this.logout}
+          />
           <Box>
             {this.state.user ? (
               <HashRouter>
@@ -126,17 +126,16 @@ class App extends Component {
                   exact
                   path="/graph"
                   render={(props) => (
-                    <Graph
+                    <Monthly
                       {...props}
                       items={this.state.items}
                       user={this.state.user}
-                      title={"Expense Analysis"}
                     />
                   )}
                 />
                 <Route
                   exact
-                  path="/form"
+                  path="/"
                   render={(props) => (
                     <Form
                       {...props}

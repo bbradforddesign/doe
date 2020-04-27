@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   header: {
     padding: "1% 2% 1% 2%",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     backgroundColor: "#353CAD",
   },
 }));
@@ -17,9 +17,23 @@ const Header = (props) => {
   const classes = useStyles();
   return (
     <Box component="header" className={classes.header}>
-      <Box style={{ flex: 1, color: "#fff" }}>
-        <Typography variant="h3">Doe</Typography>
-        <Typography variant="subtitle1">Save bucks, use Doe</Typography>
+      <Box style={{ color: "#fff" }}>
+        <Box
+          style={{
+            height: "100px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/Logo-white.png"}
+            style={{ height: "70px", width: "70px" }}
+            alt="Doe logo"
+          />
+          <Typography variant="caption">Save Bucks, Use Doe</Typography>
+        </Box>
       </Box>
       <Box style={{ alignSelf: "center" }}>
         {props.user ? (

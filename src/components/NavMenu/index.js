@@ -10,7 +10,12 @@ const NavMenu = () => {
   const [value, setValue] = useState(0);
 
   return (
-    <Box style={{ display: "flex", justifyContent: "center" }}>
+    <Box
+      style={{
+        width: "100%",
+        margin: "0 auto",
+      }}
+    >
       <BottomNavigation
         value={value}
         onChange={(e, newValue) => {
@@ -18,14 +23,13 @@ const NavMenu = () => {
         }}
         showLabels
         style={{
-          width: "inherit",
           marginBottom: "10px",
         }}
       >
         <BottomNavigationAction
           label="Transactions"
           component={Link}
-          to="/form"
+          to="/"
           value="form"
           icon={<EditIcon />}
         />
