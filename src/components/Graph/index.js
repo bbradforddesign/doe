@@ -1,22 +1,23 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
 
 import Bar from "./Bar";
 import Label from "./Label";
 
 const Graph = (props) => {
   return (
-    <Box
+    <Card
       style={{
         margin: "5% auto",
         width: "95%",
-        paddingBottom: "5%",
+        padding: "1% 0 1%",
       }}
     >
-      <div>
+      <div style={{ marginRight: "2%", marginLeft: "2%" }}>
         {/* Title */}
-        <Typography variant="h4">{props.title} Expense Report</Typography>
+        <Typography variant="h5">{props.title} Expense Report</Typography>
         {/* Graph */}
         <Box
           style={{
@@ -24,7 +25,7 @@ const Graph = (props) => {
             width: "inherit",
             height: "2vh",
             flexDirection: "row",
-            margin: "2% auto 5%",
+            margin: "2% auto 2%",
           }}
         >
           <Bar category={props.totalHousing} color="orange" />
@@ -96,7 +97,7 @@ const Graph = (props) => {
           </Box>
         </Box>
       </div>
-    </Box>
+    </Card>
   );
 };
 

@@ -9,6 +9,7 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import NavMenu from "./components/NavMenu";
 import About from "./components/About";
+import Typography from "@material-ui/core/Typography";
 
 class App extends Component {
   constructor() {
@@ -126,11 +127,23 @@ class App extends Component {
                   exact
                   path="/graph"
                   render={(props) => (
-                    <Monthly
-                      {...props}
-                      items={this.state.items}
-                      user={this.state.user}
-                    />
+                    <div>
+                      <Monthly
+                        {...props}
+                        items={this.state.items}
+                        user={this.state.user}
+                      />
+                      <Typography
+                        align="left"
+                        variant="body1"
+                        style={{ margin: "5% 5% 0 5%" }}
+                      >
+                        Expense reports are generated based on submitted
+                        transactions, which are represented in a compound bar
+                        graph. Check back each month to see your new
+                        personalized report!
+                      </Typography>
+                    </div>
                   )}
                 />
                 <Route
